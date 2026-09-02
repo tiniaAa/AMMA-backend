@@ -16,6 +16,5 @@ public class OrdenRequestDto {
     private String compradorCp;
     private String compradorProvincia;
     
-    // Solo recibimos una lista de qué quiere y cuánto quiere
     private List<ItemCompraDto> items; 
 }
