@@ -25,48 +25,50 @@ public class OrdenService {
 
     @Transactional
     public OrdenResponseDto procesarCompra(OrdenRequestDto request) {
-    	if (request.getItems() == null || request.getItems().isEmpty()) {
+    	if (request.items() == null || request.items().isEmpty()) {
             throw new IllegalArgumentException("No se puede procesar una orden sin productos.");
         }
     	Orden orden = new Orden();
-    	orden.setCompradorApellido(request.getCompradorApellido());
-    	orden.setCompradorCiudad(request.getCompradorCiudad());
-    	orden.setCompradorCp(request.getCompradorCp());
-    	orden.setCompradorDireccion(request.getCompradorDireccion());
-    	orden.setCompradorNombre(request.getCompradorNombre());
-    	orden.setCompradorProvincia(request.getCompradorProvincia());
+    	orden.setCompradorApellido(request.compradorApellido());
+    	orden.setCompradorCiudad(request.compradorCiudad());
+    	orden.setCompradorCp(request.compradorCp());
+    	orden.setCompradorDireccion(request.compradorDireccion());
+    	orden.setCompradorNombre(request.compradorNombre());
+    	orden.setCompradorProvincia(request.compradorProvincia());
     	
     	BigDecimal totalCalculado = BigDecimal.ZERO;
     	
-    	for(ItemCompraDto item : request.getItems()) {
-    		Producto producto = productoRepository.findById(item.getProductoId())
-    				.orElseThrow(() -> new RuntimeException("Producto no encontrado con ID: " + item.getProductoId()));
-    		if(producto.getStock()<item.getCantidad()) {
+    	for(ItemCompraDto item : request.items()) {
+    		Producto producto = productoRepository.findById(item.productoId())
+    				.orElseThrow(() -> new RuntimeException("Producto no encontrado con ID: " + item.productoId()));
+    		if(producto.getStock()<item.cantidad()) {
     			throw new RuntimeException("Stock insuficiente para el producto: " + producto.getNombre());
     		}
     		
-    		producto.setStock(producto.getStock()-item.getCantidad());
+    		producto.setStock(producto.getStock()-item.cantidad());
     		
     		DetalleOrden detalle = new DetalleOrden();
     		
-    		detalle.setCantidad(item.getCantidad());
+    		detalle.setCantidad(item.cantidad());
     		detalle.setPrecioUnitario(producto.getPrecio());
     		detalle.setNombreProducto(producto.getNombre());
     		detalle.setProducto(producto);
     		detalle.setOrden(orden);
 
             orden.getDetalles().add(detalle);
+            
+            BigDecimal subTotal  = producto.getPrecio().multiply(new BigDecimal(item.cantidad()));
+            totalCalculado.add(subTotal); 
     	}
-    	
-    	// 1. Crear una nueva entidad Orden vacía
-        // 2. Recorrer la lista de items del DTO de entrada (request.getItems())
-    	// 3. Por cada item, ir a la base de datos (productoRepository.findById) para buscar el precio REAL
-        // 4. Multiplicar precio REAL x cantidad solicitada
-        // 5. Restar el stock del producto
-        // 6. Generar el DetalleOrden y sumarlo al total de la Orden
-        // 7. Guardar la Orden en base de datos (ordenRepository.save)
-        // 8. Convertir el resultado a OrdenResponseDto y devolverlo
+    	orden.setTotalPagar(totalCalculado);
+    	Orden ordenGuardada = ordenRepository.save(orden);
+    	 
+        return MapearOrdenAResponseDto(ordenGuardada);
         
-        return null; // Retorno temporal
+    }
+    private OrdenResponseDto MapearOrdenAResponseDto (Orden orden) {
+    	
+    	
+    	return null;
     }
 }
