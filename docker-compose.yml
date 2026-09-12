@@ -2,7 +2,6 @@ services:
   db:
     image: postgres:16
     container_name: postgres-dev
-    restart: always
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: "1243"
