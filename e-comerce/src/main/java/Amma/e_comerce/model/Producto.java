@@ -43,4 +43,8 @@ public class Producto {
 	
 	@Column(name="ruta_imagen")
 	private String rutaImagen;
+	
+	// Nuevo campo para la baja lógica
+    @Column(nullable = false, columnDefinition = "boolean default true")
+    private Boolean activo = true;
 }

@@ -16,7 +16,7 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequestMapping("/api/admin")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "http://localhost:5173") // Clave para evitar el bloqueo de CORS desde React
+//@CrossOrigin(origins = "http://localhost:5173") // Clave para evitar el bloqueo de CORS desde React
 public class AdministradorController {
 
     private final AdministradorService administradorService;

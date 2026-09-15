@@ -9,5 +9,6 @@ public record ProductoResponseDto(
 	    BigDecimal precio, 
 	    int stock, 
 	    String categoria, 
-	    String rutaImagen
+	    String rutaImagen,
+	    Boolean activo // <-- Agregamos este campo
 	) {}

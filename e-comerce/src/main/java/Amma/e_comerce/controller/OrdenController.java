@@ -15,7 +15,7 @@ import lombok.RequiredArgsConstructor;
 @RestController // Define que esta clase recibe peticiones y devuelve datos
 @RequestMapping("/api/ordenes")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "http://localhost:5173") // Esencial para evitar el bloqueo del navegador[cite: 1]
+//@CrossOrigin(origins = "http://localhost:5173") // Esencial para evitar el bloqueo del navegador[cite: 1]
 public class OrdenController {
 
     private final OrdenService ordenService;
