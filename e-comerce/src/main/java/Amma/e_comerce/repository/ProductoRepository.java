@@ -8,9 +8,9 @@ import Amma.e_comerce.model.Producto;
 
 public interface ProductoRepository extends JpaRepository<Producto, Long> {
     
-    // Para el catálogo general: trae solo los que no están eliminados
+	// Para el catálogo general: trae solo los que no están eliminados
     List<Producto> findByActivoTrue();
 
-    // Para el filtro del catálogo: trae los activos de una categoría específica
-    List<Producto> findByCategoriaAndActivoTrue(String categoria);
+    // NUEVO: Filtra por categoría ignorando mayúsculas/minúsculas y que estén activos
+    List<Producto> findByCategoriaIgnoreCaseAndActivoTrue(String categoria);
 }

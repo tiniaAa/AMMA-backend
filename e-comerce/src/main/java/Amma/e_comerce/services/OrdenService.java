@@ -61,7 +61,7 @@ public class OrdenService {
             orden.getDetalles().add(detalle);
             
             BigDecimal subTotal  = producto.getPrecio().multiply(new BigDecimal(item.cantidad()));
-            totalCalculado.add(subTotal); 
+            totalCalculado = totalCalculado.add(subTotal);
     	}
     	orden.setTotalPagar(totalCalculado);
     	Orden ordenGuardada = ordenRepository.save(orden);

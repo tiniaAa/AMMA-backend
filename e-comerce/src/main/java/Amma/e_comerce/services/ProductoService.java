@@ -41,7 +41,7 @@ public class ProductoService {
 
     public List<ProductoResponseDto> obtenerPorCategoria(String categoria) {
         // Cambiamos findByCategoria por el que también filtra los activos
-        return productoRepository.findByCategoriaAndActivoTrue(categoria).stream()
+    	return productoRepository.findByCategoriaIgnoreCaseAndActivoTrue(categoria).stream()
                 .map(this::mapearResponseDto)
                 .toList();
     }
