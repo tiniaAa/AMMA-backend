@@ -24,7 +24,7 @@ public class OrdenService {
     // Se inyectan como constantes. Lombok crea el constructor por vos.
     private final OrdenRepository ordenRepository;
     private final ProductoRepository productoRepository;
-
+    private final EmailService emailService;
     @Transactional
     public OrdenResponseDto procesarCompra(OrdenRequestDto request) {
     	if (request.items() == null || request.items().isEmpty()) {
@@ -34,6 +34,7 @@ public class OrdenService {
     	orden.setCompradorApellido(request.compradorApellido());
     	orden.setCompradorCiudad(request.compradorCiudad());
     	orden.setCompradorCp(request.compradorCp());
+    	orden.setCompradorEmail(request.compradorEmail());
     	orden.setCompradorDireccion(request.compradorDireccion());
     	orden.setCompradorNombre(request.compradorNombre());
     	orden.setCompradorProvincia(request.compradorProvincia());
@@ -65,8 +66,11 @@ public class OrdenService {
     	}
     	orden.setTotalPagar(totalCalculado);
     	Orden ordenGuardada = ordenRepository.save(orden);
-    	 
-        return mapearOrdenAResponseDto(ordenGuardada);
+    	OrdenResponseDto respuestaDto =mapearOrdenAResponseDto(ordenGuardada); 
+        
+    	emailService.enviarCorreosDeCompra(respuestaDto);
+    	
+    	return respuestaDto;
         
     }
     private OrdenResponseDto mapearOrdenAResponseDto(Orden orden) {
@@ -85,6 +89,7 @@ public class OrdenService {
             orden.getTipoEnvio(),
             orden.getFechaCompra(),
             orden.getCompradorNombre(),
+            orden.getCompradorEmail(),
             orden.getCompradorDireccion(),
             detallesDto
         );

@@ -9,7 +9,8 @@ public record OrdenResponseDto(
 	    BigDecimal totalPagar, 
 	    String tipoEnvio, 
 	    LocalDateTime fechaCompra, 
-	    String compradorNombre, 
+	    String compradorNombre,
+	    String compradorEmail,
 	    String compradorDireccion, 
 	    List<DetalleOrdenResponseDto> detalles
 	) {}

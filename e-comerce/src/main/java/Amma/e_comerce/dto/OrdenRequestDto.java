@@ -5,7 +5,8 @@ import java.util.List;
 public record OrdenRequestDto(
 	    String tipoEnvio, 
 	    String compradorNombre, 
-	    String compradorApellido, 
+	    String compradorApellido,
+	    String compradorEmail,
 	    String compradorDireccion, 
 	    String compradorCiudad, 
 	    String compradorCp, 

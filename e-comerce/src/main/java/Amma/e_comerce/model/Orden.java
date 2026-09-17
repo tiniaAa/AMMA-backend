@@ -45,6 +45,9 @@ public class Orden {
 
     @Column(name = "comprador_apellido", nullable = false)
     private String compradorApellido;
+    
+    @Column(name = "comprador_email", nullable = false)
+    private String compradorEmail;
 
     @Column(name = "comprador_direccion", nullable = false)
     private String compradorDireccion;

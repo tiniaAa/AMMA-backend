@@ -20,16 +20,14 @@ import lombok.Setter;
 public class Administrador {
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="id")
-	private Long id;
-	
-	@Column(name="email",nullable=false)
-	private String email;
-	
-	@Column(name="password_hash",nullable=false)
-	private String passwordHash;
-	
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(nullable = false, unique = true)
+    private String email;
+
+    @Column(name = "password_hash", nullable = false)
+    private String passwordHash;
 }
 
  
