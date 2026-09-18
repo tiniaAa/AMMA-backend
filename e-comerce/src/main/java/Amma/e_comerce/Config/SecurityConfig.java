@@ -43,6 +43,8 @@ public class SecurityConfig {
                     .requestMatchers("/error").permitAll()
                     .requestMatchers("/api/ordenes/**").permitAll() 
                     .requestMatchers(HttpMethod.GET, "/api/productos/**").permitAll() 
+                    .requestMatchers("/api/mercadopago/**").permitAll()
+                    
                     
                     // --- RUTAS PRIVADAS ---
                     .anyRequest().authenticated() 

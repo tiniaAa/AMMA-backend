@@ -11,6 +11,7 @@ public record OrdenResponseDto(
 	    LocalDateTime fechaCompra, 
 	    String compradorNombre,
 	    String compradorEmail,
-	    String compradorDireccion, 
+	    String compradorDireccion,
+	    String compradorTelefono,
 	    List<DetalleOrdenResponseDto> detalles
 	) {}

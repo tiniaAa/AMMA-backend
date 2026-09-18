@@ -11,5 +11,6 @@ public record OrdenRequestDto(
 	    String compradorCiudad, 
 	    String compradorCp, 
 	    String compradorProvincia, 
+	    String compradorTelefono,
 	    List<ItemCompraDto> items
 	) {}

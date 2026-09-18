@@ -39,6 +39,7 @@ public class OrdenService {
     	orden.setCompradorNombre(request.compradorNombre());
     	orden.setCompradorProvincia(request.compradorProvincia());
     	orden.setTipoEnvio(request.tipoEnvio());
+    	orden.setCompradorTelefono(request.compradorTelefono());
     	
     	BigDecimal totalCalculado = BigDecimal.ZERO;
     	
@@ -91,6 +92,7 @@ public class OrdenService {
             orden.getCompradorNombre(),
             orden.getCompradorEmail(),
             orden.getCompradorDireccion(),
+            orden.getCompradorTelefono(),
             detallesDto
         );
     }

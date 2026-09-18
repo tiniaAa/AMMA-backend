@@ -60,6 +60,9 @@ public class Orden {
 
     @Column(name = "comprador_provincia", nullable = false)
     private String compradorProvincia;
+    
+    @Column(name = "comprador_telefono"/*, nullable = false*/)
+    private String compradorTelefono;
 
     // --- RELACIÓN BIDIRECCIONAL CON DETALLE ORDEN ---
     @OneToMany(mappedBy = "orden", cascade = CascadeType.ALL, orphanRemoval = true)
