@@ -1,12 +1,13 @@
 package Amma.e_comerce.dto;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 public record ProductoRequestDto(
     String nombre, 
     String descripcion, 
     BigDecimal precio, 
-    int stock, 
     String categoria, 
-    String rutaImagen
+    List<String> rutasImagenes, // Cambiado a Lista
+    List<VariacionDto> variaciones
 ) {}

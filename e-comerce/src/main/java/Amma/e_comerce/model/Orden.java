@@ -30,8 +30,14 @@ public class Orden {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    // Total final a cobrar: productos + envío
     @Column(name = "total_pagar", nullable = false)
     private BigDecimal totalPagar;
+
+    // Costo de envío que se aplicó a esta orden (0 si es retiro en el local).
+    // Nullable para no romper las órdenes que ya existen en la base.
+    @Column(name = "costo_envio")
+    private BigDecimal costoEnvio;
 
     @Column(name = "tipo_envio", nullable = false)
     private String tipoEnvio;
@@ -45,7 +51,7 @@ public class Orden {
 
     @Column(name = "comprador_apellido", nullable = false)
     private String compradorApellido;
-    
+
     @Column(name = "comprador_email", nullable = false)
     private String compradorEmail;
 
@@ -60,9 +66,21 @@ public class Orden {
 
     @Column(name = "comprador_provincia", nullable = false)
     private String compradorProvincia;
-    
+
     @Column(name = "comprador_telefono"/*, nullable = false*/)
     private String compradorTelefono;
+
+    // --- Pago con Mercado Pago ---
+    @Column(name = "estado_pago")
+    private String estadoPago;   // null = PENDIENTE
+
+    @Column(name = "payment_id")
+    private String paymentId;
+    
+    // Nuevo campo: "efectivo" o "mercadopago"
+    @Column(name = "metodo_pago", nullable = false)
+    private String metodoPago;
+
 
     // --- RELACIÓN BIDIRECCIONAL CON DETALLE ORDEN ---
     @OneToMany(mappedBy = "orden", cascade = CascadeType.ALL, orphanRemoval = true)

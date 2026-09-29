@@ -1,9 +1,9 @@
 package Amma.e_comerce.dto;
 
 import java.util.List;
-
 public record OrdenRequestDto(
 	    String tipoEnvio, 
+        String metodoPago,
 	    String compradorNombre, 
 	    String compradorApellido,
 	    String compradorEmail,

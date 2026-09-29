@@ -1,5 +1,7 @@
 package Amma.e_comerce.Config;
+
 import Amma.e_comerce.services.JwtService;
+import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -31,31 +33,39 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     ) throws ServletException, IOException {
 
         final String authHeader = request.getHeader("Authorization");
-        final String jwt;
-        final String userEmail;
+        String jwt = null;
+        String userEmail = null;
 
-        // 1. Si no hay token o no tiene el formato correcto, lo dejamos pasar al siguiente filtro (se bloqueará luego si la ruta es privada)
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
             filterChain.doFilter(request, response);
             return;
         }
 
-        // 2. Extraemos el token (cortamos la palabra "Bearer ")
         jwt = authHeader.substring(7);
-        userEmail = jwtService.extractUsername(jwt);
+        
+        try {
+            // Intentamos extraer el usuario (ACÁ ES DONDE EXPLOTABA SI ESTABA VENCIDO)
+            userEmail = jwtService.extractUsername(jwt);
+        } catch (ExpiredJwtException e) {
+            // Si está vencido, atrapamos el error silenciosamente.
+            // Lo dejamos pasar sin darle permisos. Spring Security lo pateará luego con un 403.
+            filterChain.doFilter(request, response);
+            return;
+        } catch (Exception e) {
+            // Cualquier otro error de firma falsa, etc.
+            filterChain.doFilter(request, response);
+            return;
+        }
 
-        // 3. Validamos si hay un usuario y si aún no está logueado en este contexto
         if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             UserDetails userDetails = this.userDetailsService.loadUserByUsername(userEmail);
 
-            // 4. Si el token es válido, creamos el pase VIP oficial de Spring
             if (jwtService.isTokenValid(jwt, userDetails)) {
                 UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                         userDetails, null, userDetails.getAuthorities()
                 );
                 authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 
-                // 5. Le damos acceso al usuario
                 SecurityContextHolder.getContext().setAuthentication(authToken);
             }
         }
