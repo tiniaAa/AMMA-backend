@@ -5,7 +5,9 @@ public record DetalleOrdenResponseDto(
 	    String nombreProducto, 
         String talle,
         String color,
+        
 	    int cantidad, 
 	    BigDecimal precioUnitario, 
-	    BigDecimal subtotal
+	    BigDecimal subtotal,
+	    String imagenUrl
 	) {}

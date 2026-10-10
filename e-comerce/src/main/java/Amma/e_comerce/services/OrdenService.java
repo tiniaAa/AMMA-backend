@@ -117,15 +117,29 @@ public class OrdenService {
 
     public OrdenResponseDto mapearOrdenAResponseDto(Orden orden) {
         List<DetalleOrdenResponseDto> detallesDto = orden.getDetalles().stream()
-                .map(detalle -> new DetalleOrdenResponseDto(
+                .map(detalle -> {
+                    // Extraemos la URL de la portada si existe, sino ponemos una de relleno
+                    String imgUrl = "https://via.placeholder.com/150?text=Sin+Imagen";
+                    if (detalle.getVariacion() != null 
+                        && detalle.getVariacion().getProducto() != null 
+                        && detalle.getVariacion().getProducto().getRutasImagenes() != null
+                        && !detalle.getVariacion().getProducto().getRutasImagenes().isEmpty()) {
+                        
+                        imgUrl = detalle.getVariacion().getProducto().getRutasImagenes().get(0);
+                    }
+                    
+                    return new DetalleOrdenResponseDto(
                         detalle.getNombreProducto(),
                         detalle.getTalle(),
                         detalle.getColor(),
                         detalle.getCantidad(),
                         detalle.getPrecioUnitario(),
-                        detalle.getPrecioUnitario().multiply(new BigDecimal(detalle.getCantidad()))))
+                        detalle.getPrecioUnitario().multiply(new BigDecimal(detalle.getCantidad())),
+                        imgUrl 
+                    );
+                })
                 .toList();
-
+        // Ahora coincide perfectamente con el constructor de tu DTO
         return new OrdenResponseDto(
                 orden.getId(),
                 orden.getTotalPagar(),
@@ -133,9 +147,11 @@ public class OrdenService {
                 orden.getFechaCompra(),
                 orden.getCompradorNombre(),
                 orden.getCompradorEmail(),
+                orden.getCompradorApellido(),
                 orden.getCompradorDireccion(),
                 orden.getCompradorTelefono(),
-                detallesDto);
+                detallesDto
+        );
     }
     @Transactional
     public void liberarReservasVencidas(int minutosReserva) {
