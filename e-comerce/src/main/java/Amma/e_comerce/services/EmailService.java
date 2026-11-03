@@ -95,7 +95,7 @@ public class EmailService {
         
         html.append("<p style=\"text-align: center; color: #777; margin-top: 20px; font-size: 14px; line-height: 1.5;\">")
             .append("Modalidad de envío: <b>").append(orden.tipoEnvio()).append("</b><br>")
-            .append("Dirección: <b>").append(orden.compradorDireccion()).append("</b><br><br>")
+            .append("Dirección: <b>").append("local".equals(orden.tipoEnvio()) ? "Moreno 1722, Laguna Paiva" : orden.compradorDireccion()).append("</b><br><br>")
             .append("En breve nos comunicaremos con vos para acordar los detalles de la entrega.")
             .append("</p>");
             
@@ -125,7 +125,7 @@ public class EmailService {
         html.append("<p style=\"margin: 8px 0; color: #444; font-size: 14px;\"><b>Cliente:</b> ").append(orden.compradorNombre()).append(" ").append(apellido).append("</p>");
         html.append("<p style=\"margin: 8px 0; color: #444; font-size: 14px;\"><b>Email:</b> <a href=\"mailto:").append(orden.compradorEmail()).append("\">").append(orden.compradorEmail()).append("</a></p>");
         html.append("<p style=\"margin: 8px 0; color: #444; font-size: 14px;\"><b>Teléfono:</b> <a href=\"https://wa.me/").append(orden.compradorTelefono()).append("\">").append(orden.compradorTelefono()).append("</a></p>");
-        html.append("<p style=\"margin: 8px 0; color: #444; font-size: 14px;\"><b>Dirección:</b> ").append(orden.compradorDireccion());
+        html.append("<p style=\"margin: 8px 0; color: #444; font-size: 14px;\"><b>Dirección:</b> ").append("local".equals(orden.tipoEnvio()) ? "Retiro en local (Moreno 1722)" : orden.compradorDireccion());
         html.append("<p style=\"margin: 8px 0; color: #444; font-size: 14px;\"><b>Envío/Retiro:</b> <span style=\"background-color:#e8f4fd; padding:3px 8px; border-radius:4px; color:#2980b9; font-weight:bold;\">").append(orden.tipoEnvio()).append("</span></p>");
         html.append("</div>");
 

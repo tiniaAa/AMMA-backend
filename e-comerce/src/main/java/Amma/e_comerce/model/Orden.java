@@ -55,19 +55,19 @@ public class Orden {
     @Column(name = "comprador_email", nullable = false)
     private String compradorEmail;
 
-    @Column(name = "comprador_direccion", nullable = false)
+    @Column(name = "comprador_direccion")
     private String compradorDireccion;
 
-    @Column(name = "comprador_ciudad", nullable = false)
+    @Column(name = "comprador_ciudad")
     private String compradorCiudad;
 
-    @Column(name = "comprador_cp", nullable = false)
+    @Column(name = "comprador_cp")
     private String compradorCp;
 
-    @Column(name = "comprador_provincia", nullable = false)
+    @Column(name = "comprador_provincia")
     private String compradorProvincia;
 
-    @Column(name = "comprador_telefono"/*, nullable = false*/)
+    @Column(name = "comprador_telefono")
     private String compradorTelefono;
 
     // --- Pago con Mercado Pago ---
